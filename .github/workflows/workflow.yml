@@ -1,7 +1,7 @@
 name: Terraform
 on:
   schedule:
-    - cron: '30 3-8 * * *'
+    - cron: '30 3-18 * * *'
 
 defaults:
   run:
