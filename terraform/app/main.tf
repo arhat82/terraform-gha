@@ -20,7 +20,7 @@ resource "google_service_account" "default" {
 }
 
 resource "google_compute_instance" "instance-apigee-network" {
-  name                      = "instance-apigee-netwthork"
+  name                      = "instance-apigee-network"
   machine_type              = "e2-medium"
   zone                      = "europe-west2-a"
   allow_stopping_for_update = true
