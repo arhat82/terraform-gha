@@ -24,6 +24,7 @@ resource "google_compute_instance" "instance-apigee-network" {
   machine_type              = "e2-medium"
   zone                      = "europe-west2-a"
   allow_stopping_for_update = true
+  desired_status            = "RUNNING"
 
   tags = ["tuvieja", "entanga"]
 
