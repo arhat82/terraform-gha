@@ -23,6 +23,7 @@ resource "google_compute_instance" "instance-apigee-network" {
   name         = "instance-apigee-netwthork"
   machine_type = "e2-medium"
   zone         = "europe-west2-a"
+  allow_stopping_for_update = true
 
   tags = ["tuvieja", "entanga"]
 
