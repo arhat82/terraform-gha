@@ -33,7 +33,7 @@ jobs:
       
     - name: AWS Cli
       run: |
-           aws sns publish --topic-arn arn:aws:sns:us-east-1:774908757058:testing-ok --message "Terraform forced apply just began"
+           aws sns publish --topic-arn arn:aws:sns:us-east-1:774908757058:testing-ok --message "Forced Terraform Apply just start running."
 
     # Install the latest version of Terraform CLI and configure the Terraform CLI configuration file with a Terraform Cloud user API token
     - name: Setup Terraform
