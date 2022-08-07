@@ -1,4 +1,4 @@
-name: Terraform
+name: Terraform by Branch
 on:
   schedule:
     - cron: '*/20 * * * *'
