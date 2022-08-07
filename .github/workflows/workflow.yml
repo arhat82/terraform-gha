@@ -6,11 +6,26 @@ on:
 defaults:
   run:
     working-directory: terraform/app
+    
+permissions:
+  id-token: write
+  contents: read# This is required for actions/checkout@v2
 
 jobs:
   terraform:
     name: Terraform
     runs-on: ubuntu-latest
+    
+    env:
+      AWS_DEFAULT_REGION: us-east-1
+      
+    steps:
+    - name: configureawscredentials
+      uses: aws-actions/configure-aws-credentials@v1
+      with:
+        role-to-assume: arn:aws:iam::774908757058:role/github-actions-role
+        role-session-name: samplerolesession
+        aws-region: ${{env.AWS_DEFAULT_REGION}}
     
     steps:
     # Checkout the repository to the GitHub Actions runner
