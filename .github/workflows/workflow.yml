@@ -26,8 +26,7 @@ jobs:
         role-to-assume: arn:aws:iam::774908757058:role/github-actions-role
         role-session-name: samplerolesession
         aws-region: ${{env.AWS_DEFAULT_REGION}}
-    
-    steps:
+        
     # Checkout the repository to the GitHub Actions runner
     - name: Checkout
       uses: actions/checkout@v2
