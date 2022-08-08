@@ -1,7 +1,6 @@
 name: Terraform
 on:
-  schedule:
-    - cron: '*/15 * * * *'
+  push:
 
 defaults:
   run:
