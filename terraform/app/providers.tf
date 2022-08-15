@@ -5,6 +5,20 @@ provider "google" {
 }
 
 terraform {
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+      version = "~> 4.0"
+    }
+  }
+}
+
+# Configure the AWS Provider
+provider "aws" {
+  region = "us-east-1"
+}
+
+terraform {
   backend "gcs" {
     bucket = "my-bucket-for-tf-1234"
     prefix = "terraform/state"
