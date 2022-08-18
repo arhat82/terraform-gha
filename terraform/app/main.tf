@@ -71,6 +71,10 @@ resource "aws_network_interface" "foo" {
 resource "aws_instance" "foo" {
   ami           = "ami-090fa75af13c156b4" # us-west-2
   instance_type = "t2.micro"
+  
+  tags = {
+    Name = "HelloWorld"
+  }
 
   network_interface {
     network_interface_id = aws_network_interface.foo.id
