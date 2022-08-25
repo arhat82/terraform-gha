@@ -1,0 +1,7 @@
+name: terraform-plan
+description: Create a terraform plan
+
+runs:
+  using: docker
+  image: ../image/Dockerfile
+  entrypoint: /entrypoints/plan.sh
