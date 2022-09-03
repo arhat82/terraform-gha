@@ -51,10 +51,34 @@ jobs:
     #- name: Terraform Format
     #  run: terraform fmt -check
       
+# Generates an execution plan for Terraform
     - name: Terraform Plan
+      id: plan
       run: terraform plan -input=false
+    - uses: actions/github-script@v6
+      if: github.event_name == 'pull_request'
       env:
-        GOOGLE_CREDENTIALS: ${{ secrets.GOOGLE_CREDENTIALS }}
+        PLAN: "terraform\n${{ steps.plan.outputs.stdout }}"
+      with:
+        script: |
+          const output = `#### Terraform Plan 📖\`${{ steps.plan.outcome }}\`
+
+          <details><summary>Show Plan</summary>
+
+          \`\`\`\n
+          ${process.env.PLAN}
+          \`\`\`
+
+          </details>
+
+          *Pushed by: @${{ github.actor }}, Action: \`${{ github.event_name }}\`*`;
+
+          github.rest.issues.createComment({
+            issue_number: context.issue.number,
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            body: output
+          })`
 
     - name: Terraform Apply
       run: terraform apply -auto-approve
