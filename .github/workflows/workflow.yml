@@ -59,6 +59,7 @@ jobs:
       if: github.event_name == 'pull_request'
       env:
         PLAN: "terraform\n${{ steps.plan.outputs.stdout }}"
+        GOOGLE_CREDENTIALS: ${{ secrets.GOOGLE_CREDENTIALS }}
       with:
         script: |
           const output = `#### Terraform Plan 📖\`${{ steps.plan.outcome }}\`
