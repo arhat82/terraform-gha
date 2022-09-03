@@ -56,7 +56,7 @@ jobs:
       id: plan
       run: terraform plan -input=false
     - uses: actions/github-script@v6
-      if: github.event_name == 'pull_request'
+      #if: github.event_name == 'pull_request'
       env:
         PLAN: "terraform\n${{ steps.plan.outputs.stdout }}"
         GOOGLE_CREDENTIALS: ${{ secrets.GOOGLE_CREDENTIALS }}
