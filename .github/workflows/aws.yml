@@ -81,7 +81,7 @@ jobs:
             owner: context.repo.owner,
             repo: context.repo.repo,
             body: output
-          })`
+          })
 
     - name: Terraform Apply
       run: terraform apply -auto-approve
