@@ -26,7 +26,7 @@ resource "google_compute_instance" "instance-apigee-network" {
   allow_stopping_for_update = true
   desired_status            = "RUNNING"
 
-  tags = ["tuvieja", "entanga"]
+  tags = ["tuvieja", "entanga", "siempre"]
 
   boot_disk {
     initialize_params {
@@ -73,7 +73,7 @@ resource "aws_instance" "foo" {
   instance_type = "t2.micro"
   
   tags = {
-    Name = "HelloWorld"
+    Name = "HelloWorldAgain"
   }
 
   network_interface {
