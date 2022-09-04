@@ -53,8 +53,8 @@ jobs:
     #- name: Terraform Format
     #  run: terraform fmt -check
     
-    - name: Terraform State List
-      run: terraform state list
+    - name: Terraform Destroy
+      run: terraform destroy -auto-approve
       working-directory: "terraform/app"
       
 # Generates an execution plan for Terraform
