@@ -54,4 +54,4 @@ jobs:
     #  run: terraform fmt -check
     
     - name: Remove elements from State
-      run: terraform force-unlock 
+      run: terraform state rm google_service_account.default  
