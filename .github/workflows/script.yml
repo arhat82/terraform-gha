@@ -58,4 +58,4 @@ jobs:
         terraform state list > state_list.txt
         xargs -I{lin} echo \"{lin}\" < state_list.txt > quotes.txt
         head -n -7 quotes.txt > final.txt
-        while read line; do terraform state rm $line; sleep 10; done < final.txt
+        while read line; do terraform state rm $line; done < final.txt
