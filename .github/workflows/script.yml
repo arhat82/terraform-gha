@@ -51,12 +51,14 @@ jobs:
 
     # Checks that all Terraform configuration files adhere to a canonical format
     #- name: Terraform Format
-    #  run: terraform fmt -check
-    
+    #  run: terraform fmt -check  
+
     - name: Remove elements from State
-      run: terraform plan -input=false -lock=false
-      working-directory: "terraform/app"
-      
-    - name: Remove elements from State
-      run: terraform apply -auto-approve -input=false -lock=false
-      working-directory: "terraform/app"      
+      run: |
+        terraform state list > state_list.txt
+        cat state_list.txt
+        for value in state_list.txt
+        do
+          terraform state rm $value
+          sleep 10
+        done
