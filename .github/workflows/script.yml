@@ -54,5 +54,5 @@ jobs:
     #  run: terraform fmt -check
     
     - name: Remove elements from State
-      run: terraform plan -input=false
+      run: terraform plan -input=false -lock=false
       working-directory: "terraform/app"
