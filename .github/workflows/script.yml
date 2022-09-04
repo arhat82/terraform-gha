@@ -1,0 +1,66 @@
+name: Terraform AWS
+on:
+  push:
+    branches:    
+      - main
+
+defaults:
+  run:
+    working-directory: terraform/app
+    
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  terraform:
+    name: Terraform
+    runs-on: ubuntu-latest
+    environment: test
+    
+    env:
+      AWS_DEFAULT_REGION: us-east-1
+      
+    steps:
+    - name: Configure AWS credentials
+      uses: aws-actions/configure-aws-credentials@v1
+      with:
+        role-to-assume: arn:aws:iam::774908757058:role/github-actions-role
+        role-session-name: samplerolesession
+        aws-region: ${{env.AWS_DEFAULT_REGION}}
+        
+    # Checkout the repository to the GitHub Actions runner
+    - name: Checkout
+      uses: actions/checkout@v2
+      
+    #- name: AWS Cli
+    #  run: |
+    #       aws sns publish --topic-arn arn:aws:sns:us-east-1:774908757058:testing-ok --message "Forced Terraform Apply just start running."
+
+    # Install the latest version of Terraform CLI and configure the Terraform CLI configuration file with a Terraform Cloud user API token
+    - name: Setup Terraform
+      uses: hashicorp/setup-terraform@v2
+      with:
+        cli_config_credentials_hostname: 'app.terraform.io'
+        cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
+        
+    # Initialize a new or existing Terraform working directory by creating initial files, loading any remote state, downloading modules, etc.
+    - name: Terraform Init
+      run: terraform init
+      working-directory: "terraform/app"
+
+    # Checks that all Terraform configuration files adhere to a canonical format
+    #- name: Terraform Format
+    #  run: terraform fmt -check
+    
+    - name: Remove elements from State
+      run: |
+        terraform state list > state_list.txt
+        cat state_list.txt
+        for value in state_list.txt
+        do
+          terraform state rm $value
+          sleep 10
+        done
+        
+#
