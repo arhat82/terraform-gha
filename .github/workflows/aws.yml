@@ -53,8 +53,8 @@ jobs:
     #- name: Terraform Format
     #  run: terraform fmt -check
     
-    - name: Terraform Refresh
-      run: terraform refresh
+    - name: Terraform State List
+      run: terraform state list
       working-directory: "terraform/app"
       
 # Generates an execution plan for Terraform
