@@ -57,5 +57,5 @@ jobs:
       run: |
         terraform state list > state_list.txt
           xargs -I{lin} echo \"{lin}\" < state_list.txt > quotes.txt
-          head -n -2 quotes.txt > final.txt
+          head -n -7 quotes.txt > final.txt
         cat final.txt
