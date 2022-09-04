@@ -1,4 +1,4 @@
-name: Terraform AWS
+name: Terraform Destroy
 on:
   push:
     branches:    
@@ -54,13 +54,4 @@ jobs:
     #  run: terraform fmt -check
     
     - name: Remove elements from State
-      run: |
-        terraform state list > state_list.txt
-        cat state_list.txt
-        for value in state_list.txt
-        do
-          terraform state rm $value
-          sleep 10
-        done
-        
-#
+      run: terraform state rm google_service_account.default
