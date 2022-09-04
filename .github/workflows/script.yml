@@ -57,9 +57,8 @@ jobs:
       run: |
         terraform state list > state_list.txt
         cat state_list.txt
-        for value in state_list.txt
-        do
-          echo $value
-          terraform state rm $value
+        while read line; do
+          echo $line
+          terraform state rm $line
           sleep 10
-        done
+        done < state_list.txt
