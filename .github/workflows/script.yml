@@ -59,6 +59,7 @@ jobs:
         cat state_list.txt
         for value in state_list.txt
         do
+          echo $value
           terraform state rm $value
           sleep 10
         done
