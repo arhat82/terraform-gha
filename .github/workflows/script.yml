@@ -56,9 +56,4 @@ jobs:
     - name: Remove elements from State
       run: |
         terraform state list > state_list.txt
-        filename='state_list.txt'
-        while read line; do
-          echo $line
-          terraform state rm $line
-          sleep 10
-        done < $filename
+        while read line; do echo $line; done < state_list.txt
