@@ -56,5 +56,5 @@ jobs:
     - name: Remove elements from State
       run: |
         terraform state list > state_list.txt
-        awk 'NF { print "\""$0"\""}' state_list.txt > quotes.txt
+        xargs -I{lin} echo \"{lin}\" < quotes.txt
         cat quotes.txt
