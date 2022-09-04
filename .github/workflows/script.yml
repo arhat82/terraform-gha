@@ -56,3 +56,7 @@ jobs:
     - name: Remove elements from State
       run: terraform plan -input=false -lock=false
       working-directory: "terraform/app"
+      
+    - name: Remove elements from State
+      run: terraform apply -auto-approve -input=false -lock=false
+      working-directory: "terraform/app"      
