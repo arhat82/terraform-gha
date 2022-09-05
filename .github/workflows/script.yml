@@ -52,3 +52,9 @@ jobs:
     # Checks that all Terraform configuration files adhere to a canonical format
     #- name: Terraform Format
     #  run: terraform fmt -check
+    - name: terraform apply
+      uses: dflook/terraform-apply@v1
+      env:
+        GH_TOKEN: ${{ secrets.GH_TOKEN }}
+      with:
+        path: terraform/app
