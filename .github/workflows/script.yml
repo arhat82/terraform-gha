@@ -59,3 +59,4 @@ jobs:
         TERRAFORM_CLOUD_TOKENS: app.terraform.io=${{ secrets.TF_API_TOKEN }}
       with:
         path: terraform/app
+        workspace: newtest
