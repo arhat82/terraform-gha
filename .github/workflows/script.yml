@@ -55,7 +55,7 @@ jobs:
 
     - name: Remove elements from State
       run: |
-        terraform state list > state_list.txt
-        xargs -I{lin} echo \"{lin}\" < state_list.txt > quotes.txt
-        head -n -7 quotes.txt > final.txt
-        while read line; do echo terraform state rm $line; done < final.txt
+        terraform state rm "aws_instance.foo"
+        terraform state rm "aws_network_interface.foo"
+        terraform state rm "aws_subnet.my_subnet"
+        terraform state rm "aws_vpc.my_vpc"
