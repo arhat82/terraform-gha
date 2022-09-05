@@ -1,6 +1,6 @@
 name: Terraform Destroy
 on:
-  pull_request:
+  push:
     branches:    
       - main
 
@@ -48,15 +48,3 @@ jobs:
     - name: Terraform Init
       run: terraform init
       working-directory: "terraform/app"
-
-    # Checks that all Terraform configuration files adhere to a canonical format
-    #- name: Terraform Format
-    #  run: terraform fmt -check
-    - name: terraform plan
-      uses: dflook/terraform-plan@v1
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        TERRAFORM_CLOUD_TOKENS: app.terraform.io=${{ secrets.TF_API_TOKEN }}
-      with:
-        path: terraform/app
-        workspace: newtest
