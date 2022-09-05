@@ -56,6 +56,6 @@ jobs:
     - name: Remove elements from State
       run: |
         terraform state list > state_list.txt
-        xargs -I{lin} echo \"{lin}\" < state_list.txt > quotes.txt
+        xargs -I{lin} echo \'{lin}\' < state_list.txt > quotes.txt
         head -n -7 quotes.txt > final.txt
-        while read line; do terraform state rm $line; done < final.txt
+        while read line; do echo $line; done < final.txt
