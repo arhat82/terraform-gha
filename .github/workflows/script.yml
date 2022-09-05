@@ -49,6 +49,7 @@ jobs:
       run: terraform init
       working-directory: "terraform/app"
 
-    # Checks that all Terraform configuration files adhere to a canonical format
-    #- name: Terraform Format
-    #  run: terraform fmt -check
+    - name: terraform plan
+      uses: dflook/terraform-plan@v1
+      with:
+        path: my-terraform-config
