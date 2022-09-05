@@ -1,6 +1,6 @@
 name: Terraform Destroy
 on:
-  pull_request_target:
+  pull_request:
     branches:    
       - main
 
@@ -51,11 +51,4 @@ jobs:
 
     # Checks that all Terraform configuration files adhere to a canonical format
     #- name: Terraform Format
-    #  run: terraform fmt -check  
-
-    - name: Remove elements from State
-      run: |
-        terraform state rm "aws_instance.foo"
-        terraform state rm "aws_network_interface.foo"
-        terraform state rm "aws_subnet.my_subnet"
-        terraform state rm "aws_vpc.my_vpc"
+    #  run: terraform fmt -check
