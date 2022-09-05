@@ -1,6 +1,6 @@
 name: Terraform Destroy
 on:
-  push:
+  pull_request:
     branches:    
       - main
 
@@ -52,10 +52,16 @@ jobs:
     # Checks that all Terraform configuration files adhere to a canonical format
     #- name: Terraform Format
     #  run: terraform fmt -check  
+    
+    - name: Comment
+      uses: actions/github-script@v6
+      with:
+        script: |
+          github.rest.issues.createComment({
+            issue_number: context.issue.number,
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            body: '👋 Thanks for reporting!'
+          })    
 
-    - name: Remove elements from State
-      run: |
-        terraform state rm "aws_instance.foo"
-        terraform state rm "aws_network_interface.foo"
-        terraform state rm "aws_subnet.my_subnet"
-        terraform state rm "aws_vpc.my_vpc"
+
