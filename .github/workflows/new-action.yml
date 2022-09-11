@@ -43,11 +43,6 @@ jobs:
         cli_config_credentials_hostname: "app.terraform.io"
         cli_config_credentials_token: "${{ secrets.TFE_TOKEN }}" ## Add admin team TFE_TOKEN as GitHub secret
 
-    - name: Terraform Format
-      id: terraform-fmt
-      run: terraform fmt -check
-      working-directory: 'terraform/app'
-
     - id: terraform-init
       name: Terraform init
       working-directory: 'terraform/app'
