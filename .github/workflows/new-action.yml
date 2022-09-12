@@ -22,6 +22,7 @@ jobs:
   infrastructure:
     name: Infrastructure
     runs-on: ubuntu-20.04
+    environment: test
 
     env:
       AWS_DEFAULT_REGION: us-east-1
@@ -92,46 +93,6 @@ jobs:
     - name: Terraform Plan Status
       if: steps.terraform-plan.outcome == 'failure'
       run: exit 1
-
-    #- name: Terraform Apply
-      #if: github.ref == 'refs/heads/main' && github.event_name == 'push'  ## Change ref if your default branch is not named "main"
-      #run: terraform apply -auto-approve -input=false
-      #working-directory: 'terraform/app'
-
-  apply:
-    needs: infrastructure
-    name: Apply
-    runs-on: ubuntu-20.04
-    environment: test
-    env:
-      AWS_DEFAULT_REGION: us-east-1
-
-    steps:
-    - name: Configure AWS credentials
-      uses: aws-actions/configure-aws-credentials@v1
-      with:
-        role-to-assume: arn:aws:iam::774908757058:role/github-actions-role
-        role-session-name: samplerolesession
-        aws-region: ${{env.AWS_DEFAULT_REGION}}
-
-    - uses: actions/checkout@v2
-      name: "Checkout self"
-
-    - name: Configure Terraform
-      uses: hashicorp/setup-terraform@v2
-      with:
-        cli_config_credentials_hostname: "app.terraform.io"
-        cli_config_credentials_token: "${{ secrets.TFE_TOKEN }}" ## Add admin team TFE_TOKEN as GitHub secret
-
-    - name: Terraform init
-      id: terraform-init
-      working-directory: 'terraform/app'
-      run: terraform init
-
-    - name: Terraform Validate
-      id: terraform-validate
-      working-directory: 'terraform/app'
-      run: terraform validate -no-color
 
     - name: Terraform Apply
       if: github.ref == 'refs/heads/main' && github.event_name == 'push'  ## Change ref if your default branch is not named "main"
