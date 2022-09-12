@@ -91,6 +91,6 @@ jobs:
       run: exit 1
 
     - name: Terraform Apply
-      if: github.ref == 'refs/heads/main' && github.event_name == 'push'  ## Change ref if your default branch is not named "main"
+      if: github.ref == 'refs/heads/main' && github.event_name == 'pull_request'  ## Change ref if your default branch is not named "main"
       run: terraform apply -auto-approve -input=false
       working-directory: 'terraform/app'
