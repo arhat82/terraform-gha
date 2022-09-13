@@ -1,0 +1,95 @@
+name: "Comments"
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+    - main
+  pull_request:
+    branches:
+    - main
+
+##TODO: Replace with YOUR azure credentials. Needed to deploy resources for workspaces with local execution mode
+defaults:
+  run:
+    working-directory: terraform/app
+
+permissions:
+  id-token: write
+  contents: read    
+
+jobs:
+  plan:
+    name: Infrastructure with Plan
+    runs-on: ubuntu-20.04
+    environment: test
+
+    env:
+      AWS_DEFAULT_REGION: us-east-1
+
+    steps:
+    - name: Configure AWS credentials
+      uses: aws-actions/configure-aws-credentials@v1
+      with:
+        role-to-assume: arn:aws:iam::774908757058:role/github-actions-role
+        role-session-name: samplerolesession
+        aws-region: ${{env.AWS_DEFAULT_REGION}}
+
+    - uses: actions/checkout@v2
+      name: "Checkout self"
+
+    - name: Configure Terraform
+      uses: hashicorp/setup-terraform@v2
+      with:
+        cli_config_credentials_hostname: "app.terraform.io"
+        cli_config_credentials_token: "${{ secrets.TFE_TOKEN }}" ## Add admin team TFE_TOKEN as GitHub secret
+
+    - id: terraform-init
+      name: Terraform init
+      working-directory: 'terraform/app'
+      run: terraform init
+
+    - name: Terraform Validate
+      id: terraform-validate
+      working-directory: 'terraform/app'
+      run: terraform validate -no-color
+
+    - id: terraform-plan
+      name: Terraform plan
+      working-directory: 'terraform/app'
+      if: github.event_name == 'pull_request'
+      run: terraform plan -no-color -input=false
+
+    - name: Update Pull Request
+      uses: actions/github-script@v6
+      if: github.event_name == 'pull_request'
+      env:
+        PLAN: "terraform\n${{ steps.terraform-plan.outputs.stdout }}"
+      with:
+        github-token: ${{ secrets.GHA_EXTERNAL }}
+        script: |
+          const output = `#### Terraform Format and Style 🖌\`${{ steps.terraform-fmt.outcome }}\`
+          #### Terraform Initialization ⚙️\`${{ steps.terraform-init.outcome }}\`
+          #### Terraform Plan 📖\`${{ steps.terraform-plan.outcome }}\`
+          #### Terraform Validation 🤖\`${{ steps.terraform-validate.outcome }}\`
+
+          <details><summary>Show Plan</summary>
+
+          \`\`\`\n
+          ${process.env.PLAN}
+          \`\`\`
+
+          </details>
+
+          *Pusher: @${{ github.actor }}, Action: \`${{ github.event_name }}\`*`;
+
+          github.rest.issues.createComment({
+            issue_number: context.issue.number,
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            body: output
+          })
+
+    - name: Terraform Plan Status
+      if: steps.terraform-plan.outcome == 'failure'
+      run: exit 1
