@@ -30,7 +30,7 @@ resource "aws_instance" "foo" {
   instance_type = "t2.micro"
   
   tags = {
-    Name = "HelloWorldAgain"
+    Name = "HelloWorld"
   }
 
   network_interface {
