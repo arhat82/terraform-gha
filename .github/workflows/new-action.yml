@@ -100,9 +100,8 @@ jobs:
       working-directory: 'terraform/app'
       
 
-jobs:
-  plan:
-    name: Infrastructure with Plan
+  apply:
+    name: Infrastructure with Apply
     runs-on: ubuntu-20.04
     environment: test
 
