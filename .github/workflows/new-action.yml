@@ -95,7 +95,7 @@ jobs:
       run: exit 1
 
   apply:
-    if: github.event.pull_request.merged == true
+    if: ${{ github.event.pull_request.merged }}
     name: Infrastructure with Apply
     runs-on: ubuntu-20.04
     environment: apply
