@@ -103,7 +103,7 @@ jobs:
   apply:
     name: Infrastructure with Apply
     runs-on: ubuntu-20.04
-    environment: test
+    environment: apply
 
     env:
       AWS_DEFAULT_REGION: us-east-1
