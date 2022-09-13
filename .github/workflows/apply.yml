@@ -1,9 +1,9 @@
 name: "Apply"
 
 on:
-  merge_group:
-    branches:
-    - main
+  pull_request:
+    types:
+      - closed
 
 ##TODO: Replace with YOUR azure credentials. Needed to deploy resources for workspaces with local execution mode
 defaults:
@@ -52,6 +52,5 @@ jobs:
       run: terraform validate -no-color
 
     - name: Terraform Apply
-      if: github.ref == 'refs/heads/main' && github.event_name == 'push'  ## Change ref if your default branch is not named "main"
       run: terraform apply -auto-approve -input=false
       working-directory: 'terraform/app'
