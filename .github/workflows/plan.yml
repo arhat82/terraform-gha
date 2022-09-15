@@ -62,7 +62,7 @@ jobs:
       env:
         PLAN: "terraform\n${{ steps.terraform-plan.outputs.stdout }}"
       with:
-        github-token: ${{ secrets.GHA_EXTERNAL }}
+        github-token: ${{ secrets.GITHUB_TOKEN }}
         script: |
           const output = `#### Terraform Format and Style 🖌\`${{ steps.terraform-fmt.outcome }}\`
           #### Terraform Initialization ⚙️\`${{ steps.terraform-init.outcome }}\`
