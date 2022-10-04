@@ -10,9 +10,7 @@ defaults:
   run:
     working-directory: terraform/app
 
-permissions:
-  id-token: write
-  contents: read    
+permissions: write-all 
 
 jobs:
   plan:
