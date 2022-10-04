@@ -54,38 +54,8 @@ jobs:
       name: Terraform plan
       working-directory: 'terraform/app'
       if: github.event_name == 'pull_request'
-      run: terraform plan -no-color -input=false
-
-    - name: Update Pull Request
-      uses: actions/github-script@v6
-      if: github.event_name == 'pull_request'
-      env:
-        PLAN: "terraform\n${{ steps.terraform-plan.outputs.stdout }}"
-      with:
-        github-token: ${{ secrets.GITHUB_TOKEN }}
-        script: |
-          const output = `#### Terraform Format and Style 🖌\`${{ steps.terraform-fmt.outcome }}\`
-          #### Terraform Initialization ⚙️\`${{ steps.terraform-init.outcome }}\`
-          #### Terraform Plan 📖\`${{ steps.terraform-plan.outcome }}\`
-          #### Terraform Validation 🤖\`${{ steps.terraform-validate.outcome }}\`
-
-          <details><summary>Show Plan</summary>
-
-          \`\`\`\n
-          ${process.env.PLAN}
-          \`\`\`
-
-          </details>
-
-          *Pusher: @${{ github.actor }}, Action: \`${{ github.event_name }}\`*`;
-
-          github.rest.issues.createComment({
-            issue_number: context.issue.number,
-            owner: context.repo.owner,
-            repo: context.repo.repo,
-            body: output
-          })
+      run: terraform plan -no-color -input=false -out=tfplan -lock=false >output.txt && terraform show -no-color tfplan
 
     - name: Terraform Plan Status
       if: steps.terraform-plan.outcome == 'failure'
-      run: exit 1
+      run: cat output.txt && exit 1
