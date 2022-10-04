@@ -50,7 +50,7 @@ jobs:
       working-directory: 'terraform/app'
       run: terraform plan -no-color -input=false -out=tfplan -lock=false
       
-    - id: terraform-show
+    - id: terraform show
       name: Terraform show
       working-directory: 'terraform/app'
       run: terraform show -no-color tfplan
