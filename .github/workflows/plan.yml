@@ -49,7 +49,8 @@ jobs:
       name: Terraform plan
       working-directory: 'terraform/app'
       if: github.event_name == 'pull_request'
-      run: terraform plan -no-color -input=false -out=tfplan -lock=false >output.txt && terraform show -no-color tfplan
+      #run: terraform plan -no-color -input=false -out=tfplan -lock=false >output.txt && terraform show -no-color tfplan
+      run: terraform plan -no-color -input=false -out=tfplan -lock=false
 
     - name: Terraform Plan Status
       if: steps.terraform-plan.outcome == 'failure'
