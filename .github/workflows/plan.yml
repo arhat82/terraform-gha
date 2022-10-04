@@ -52,7 +52,7 @@ jobs:
       
     - name: Terraform Validate
       id: terraform-validate
-      working-directory: main/prd/tfe-disconnected
+      working-directory: 'terraform/app'
       run: terraform validate -no-color
 
     - id: terraform-plan
