@@ -1,5 +1,5 @@
 resource "aws_vpc" "my_vpc" {
-  cidr_block = "280.16.0.0/16"
+  cidr_block = "34.16.0.0/16"
 
   tags = {
     Name = "tf-example"
