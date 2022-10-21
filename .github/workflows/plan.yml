@@ -56,12 +56,12 @@ jobs:
     - id: terraform-plan
       name: Terraform plan
       working-directory: 'terraform/app'
-      run: terraform plan -no-color -input=false -out=tfplan -lock=false && pwd && ls -l
+      run: terraform plan -no-color -input=false -out=tfplan -lock=false
       
     - uses: actions/upload-artifact@v3
       with:
         name: tfplanfile
-        path: ./tfplan
+        path: /home/runner/work/terraform-gha/terraform-gha/terraform/app/tfplan
       
     - id: terraform-show
       name: Terraform show
