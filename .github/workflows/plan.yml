@@ -58,6 +58,11 @@ jobs:
       working-directory: 'terraform/app'
       run: terraform plan -no-color -input=false -out=tfplan -lock=false
       
+    - uses: actions/upload-artifact@v3
+      with:
+        name: tfplanfile
+        path: ./tfplan
+      
     - id: terraform-show
       name: Terraform show
       working-directory: 'terraform/app'
