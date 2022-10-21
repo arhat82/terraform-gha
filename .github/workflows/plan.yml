@@ -56,7 +56,7 @@ jobs:
     - id: terraform-plan
       name: Terraform plan
       working-directory: 'terraform/app'
-      run: terraform plan -no-color -input=false -out=tfplan -lock=false
+      run: terraform plan -no-color -input=false -out=tfplan -lock=false && pwd && ls -l
       
     - uses: actions/upload-artifact@v3
       with:
